@@ -5,9 +5,6 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Updater"
         mc:Ignorable="d"
-        Title="MainWindow" Height="360" Width="640" WindowStyle="None" ResizeMode="NoResize" Background="Transparent" AllowsTransparency="True" WindowStartupLocation="CenterScreen">
-    <Grid>
-        <Image Source="C:\Users\user\Downloads\esp.png"/>
-        
-    </Grid>
+        Title="MainWindow" Height="360" Width="640" WindowStyle="None" ResizeMode="NoResize" Background="Black" AllowsTransparency="True" WindowStartupLocation="CenterScreen">
+    <Grid Background="Black"></Grid>
 </Window>

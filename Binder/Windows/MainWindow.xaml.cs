@@ -15,7 +15,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using WindowsInput;
 
-namespace Binder
+namespace Binder.Windows
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -25,13 +25,7 @@ namespace Binder
         public MainWindow()
         {
             InitializeComponent();
-            InputSimulator inputSimulator = new InputSimulator();
-            WinHotKey winHotKey = new WinHotKey(Key.NumPad1, KeyModifier.None, (h) =>
-            {
-                inputSimulator.Keyboard.KeyPress((WindowsInput.Native.VirtualKeyCode)Keys.T);
-                inputSimulator.Keyboard.TextEntry("Привет!");
-                inputSimulator.Keyboard.KeyPress((WindowsInput.Native.VirtualKeyCode)Keys.Enter);
-            }, true);
+            ((MainWindowVM)DataContext).Initalize(this);
         }
     }
 }
