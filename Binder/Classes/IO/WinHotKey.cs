@@ -9,7 +9,7 @@ using System.Windows;
 using System.Windows.Input;
 using System.Windows.Interop;
 
-namespace Binder
+namespace Binder.IO
 {
     public class WinHotKey : IDisposable
     {

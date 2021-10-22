@@ -6,7 +6,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Binder
+namespace Binder.IO
 {
     /// <summary>
     /// A hotkey. Allows you to easily track the status of the keys on the keyboard or mouse.
@@ -27,10 +27,6 @@ namespace Binder
 
         static HotKey()
         {
-            /*App.Current.Dispatcher.Invoke(() => 
-            {
-                App.Current.Exit += (o, e) => _keepWork = false;
-            });*/
             Task.Factory.StartNew(() =>
             {
                 App.Current.Dispatcher.Invoke(() => App.Current.Exit += (o, e) => _keepWork = false);

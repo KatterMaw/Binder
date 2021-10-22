@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Input;
 
-namespace Binder
+namespace Binder.IO
 {
     static class MouseAndKeyboardInput
     {

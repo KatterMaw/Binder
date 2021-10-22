@@ -9,21 +9,30 @@
         Style="{StaticResource MaterialDesignWindow}"
         AllowsTransparency="True"
         xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
-        xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes">
+        xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+        Background="Transparent">
     <Window.DataContext>
         <local:MainWindowVM/>
     </Window.DataContext>
     <WindowChrome.WindowChrome>
-        <WindowChrome CaptionHeight="27"/>
+        <WindowChrome CaptionHeight="27" CornerRadius="{Binding UniformCornerRadius}" ResizeBorderThickness="{Binding ResizeBorderThickness, UpdateSourceTrigger=PropertyChanged}"/>
     </WindowChrome.WindowChrome>
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="30"/>
-            <RowDefinition/>
-        </Grid.RowDefinitions>
-        <Border Background="{StaticResource MaterialDesignDarkSeparatorBackground}"/>
-        <Button Width="50" Height="20" HorizontalAlignment="Center" Padding="0" VerticalAlignment="Top" Style="{StaticResource MaterialDesignFlatButton}" WindowChrome.IsHitTestVisibleInChrome="True" md:ButtonAssist.CornerRadius="0 0 5 5">
-            <iconPacks:MaterialDesign Kind="MoreHoriz"/>
-        </Button>
+    <Grid Background="Transparent">
+        <Border Margin="{Binding ShadowThickness, UpdateSourceTrigger=PropertyChanged}" CornerRadius="{Binding UniformCornerRadius, UpdateSourceTrigger=PropertyChanged}" Background="{StaticResource MaterialDesignDarkBackground}">
+            <Border.Effect>
+                <DropShadowEffect BlurRadius="10" ShadowDepth="0" Color="{StaticResource MaterialDesignShadow}" Opacity="0.4"/>
+            </Border.Effect>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+                <Border Background="{StaticResource MaterialDesignDarkSeparatorBackground}" CornerRadius="{Binding TopCornerRadius, UpdateSourceTrigger=PropertyChanged}"/>
+                <Button Width="50" Height="20" HorizontalAlignment="Center" Padding="0" VerticalAlignment="Top" Style="{StaticResource MaterialDesignFlatButton}" WindowChrome.IsHitTestVisibleInChrome="True" md:ButtonAssist.CornerRadius="0 0 5 5">
+                    <iconPacks:MaterialDesign Kind="MoreHoriz"/>
+                </Button>
+            </Grid>
+        </Border>
     </Grid>
+    
 </Window>
