@@ -5,6 +5,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Media.Animation;
 
 namespace Binder.Windows
 {
@@ -78,6 +80,43 @@ namespace Binder.Windows
 
         #endregion
 
+        #region NonClientReplacer
+
+        private RelayCommand _closeWindowCommand;
+        public RelayCommand CloseWindowCommand
+        {
+            get
+            {
+                return _closeWindowCommand ?? (_closeWindowCommand = new RelayCommand(obj =>
+                {
+                    App.Current.Shutdown();
+                }));
+            }
+        }
+        private RelayCommand _maximizeWindowCommand;
+        public RelayCommand MaximizeWindowCommand
+        {
+            get
+            {
+                return _maximizeWindowCommand ?? (_maximizeWindowCommand = new RelayCommand(obj =>
+                {
+                    _parentWindow.WindowState = WindowState.Maximized;
+                }));
+            }
+        }
+        private RelayCommand _minimizeWindowCommand;
+        public RelayCommand MinimizeWindowCommand
+        {
+            get
+            {
+                return _minimizeWindowCommand ?? (_minimizeWindowCommand = new RelayCommand(obj =>
+                {
+                    _parentWindow.WindowState = WindowState.Minimized;
+                }));
+            }
+        }
+
+        #endregion
 
         public void Initalize(MainWindow parentWindow)
         {

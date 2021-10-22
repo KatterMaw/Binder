@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Binder.Windows"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800" WindowStyle="None"
+        Title="Light Binder" Height="450" Width="800" WindowStyle="None"
         Style="{StaticResource MaterialDesignWindow}"
         AllowsTransparency="True"
         xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
@@ -20,18 +20,36 @@
     <Grid Background="Transparent">
         <Border Margin="{Binding ShadowThickness, UpdateSourceTrigger=PropertyChanged}" CornerRadius="{Binding UniformCornerRadius, UpdateSourceTrigger=PropertyChanged}" Background="{StaticResource MaterialDesignDarkBackground}">
             <Border.Effect>
-                <DropShadowEffect BlurRadius="10" ShadowDepth="0" Color="{StaticResource MaterialDesignShadow}" Opacity="0.4"/>
+                <DropShadowEffect BlurRadius="10" ShadowDepth="0" Color="{StaticResource MaterialDesignShadow}" Opacity="0.5"/>
             </Border.Effect>
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="30"/>
                     <RowDefinition/>
                 </Grid.RowDefinitions>
-                <Border Background="{StaticResource MaterialDesignDarkSeparatorBackground}" CornerRadius="{Binding TopCornerRadius, UpdateSourceTrigger=PropertyChanged}"/>
-                <Button Width="50" Height="20" HorizontalAlignment="Center" Padding="0" VerticalAlignment="Top" Style="{StaticResource MaterialDesignFlatButton}" WindowChrome.IsHitTestVisibleInChrome="True" md:ButtonAssist.CornerRadius="0 0 5 5">
-                    <iconPacks:MaterialDesign Kind="MoreHoriz"/>
-                </Button>
+                <Border Background="{StaticResource MaterialDesignDarkSeparatorBackground}" CornerRadius="{Binding TopCornerRadius, UpdateSourceTrigger=PropertyChanged}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="30"/>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="40"/>
+                            <ColumnDefinition Width="40"/>
+                            <ColumnDefinition Width="40"/>
+                        </Grid.ColumnDefinitions>
+                        <Button Style="{StaticResource MaterialDesignFlatButton}" Grid.Column="4" Padding="0" WindowChrome.IsHitTestVisibleInChrome="True" md:ButtonAssist.CornerRadius="0 5 0 0" Command="{Binding CloseWindowCommand}">
+                            <iconPacks:Material Kind="Close" Height="15"/>
+                        </Button>
+                        <Button Style="{StaticResource MaterialDesignFlatButton}" Grid.Column="3" Padding="0" WindowChrome.IsHitTestVisibleInChrome="True" md:ButtonAssist.CornerRadius="0" Command="{Binding MaximizeWindowCommand}">
+                            <iconPacks:Material Kind="WindowMaximize" Height="15"/>
+                        </Button>
+                        <Button Style="{StaticResource MaterialDesignFlatButton}" Grid.Column="2" Padding="0" WindowChrome.IsHitTestVisibleInChrome="True" md:ButtonAssist.CornerRadius="0" Command="{Binding MinimizeWindowCommand}">
+                            <iconPacks:Material Kind="WindowMinimize" Height="15"/>
+                        </Button>
+                    </Grid>
+                </Border>
+                
             </Grid>
+            
         </Border>
     </Grid>
     
