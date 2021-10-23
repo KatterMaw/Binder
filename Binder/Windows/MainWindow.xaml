@@ -12,6 +12,7 @@
         xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
         xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:fluent="clr-namespace:SourceChord.FluentWPF;assembly=FluentWPF"
+        xmlns:stuff="clr-namespace:Binder.Stuff"
         Background="Transparent">
     <Window.DataContext>
         <local:MainWindowVM/>
