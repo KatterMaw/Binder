@@ -2,7 +2,7 @@
 using System.Windows.Shapes;
 using MahApps.Metro.IconPacks;
 
-namespace Binder.Classes
+namespace Binder.UI
 {
     class Menu : ViewModel
     {
