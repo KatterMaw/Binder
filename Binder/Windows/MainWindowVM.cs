@@ -1,6 +1,9 @@
-﻿using Binder.Stuff;
+﻿using Binder.Pages;
+using Binder.Stuff;
+using MahApps.Metro.IconPacks;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -45,6 +48,17 @@ namespace Binder.Windows
                 else if (_parentWindow.Top == 0 && _parentWindow.ActualHeight == Utils.ScreenResolutionWithoutTaskbar.Height) return new CornerRadius(0);
                 else if (_parentWindow.ActualHeight == Utils.ScreenResolutionWithoutTaskbar.Height / 2 && _parentWindow.ActualWidth == Utils.ScreenResolutionWithoutTaskbar.Width / 2) return new CornerRadius(0);
                 else return new CornerRadius(5, 5, 0, 0);
+            }
+        }
+        public CornerRadius BottomCornerRadius
+        {
+            get
+            {
+                if (_parentWindow == null) return new CornerRadius(0, 0, 5, 5);
+                else if (_parentWindow.WindowState == WindowState.Maximized) return new CornerRadius(0);
+                else if (_parentWindow.Top == 0 && _parentWindow.ActualHeight == Utils.ScreenResolutionWithoutTaskbar.Height) return new CornerRadius(0);
+                else if (_parentWindow.ActualHeight == Utils.ScreenResolutionWithoutTaskbar.Height / 2 && _parentWindow.ActualWidth == Utils.ScreenResolutionWithoutTaskbar.Width / 2) return new CornerRadius(0);
+                else return new CornerRadius(0, 0, 5, 5);
             }
         }
         public Thickness ShadowThickness
@@ -118,10 +132,84 @@ namespace Binder.Windows
 
         #endregion
 
+        public Classes.Menu[] Menus { get; set; } = new Classes.Menu[5]
+            {
+                new Classes.Menu(
+                    "Главная",
+                    PackIconMaterialKind.Home,
+                    PackIconMaterialKind.HomeOutline,
+                    new HomePage()),
+
+                new Classes.Menu(
+                    "Бинды",
+                    PackIconMaterialKind.None,
+                    PackIconMaterialKind.None,
+                    new BindsPage()),
+
+                new Classes.Menu(
+                    "Команды",
+                    PackIconMaterialKind.None,
+                    PackIconMaterialKind.None,
+                    new CommandsPage()),
+
+                new Classes.Menu(
+                    "Оверлей",
+                    PackIconMaterialKind.None,
+                    PackIconMaterialKind.None,
+                    new OverlayPage()),
+
+                new Classes.Menu(
+                    "Настройки",
+                    PackIconMaterialKind.Cog,
+                    PackIconMaterialKind.CogOutline,
+                    new SettingsPage())
+            };
+        public Classes.Menu SelectedMenu
+        {
+            get => _selectedMenu;
+            set
+            {
+                _selectedMenu = value;
+                foreach (Classes.Menu menu in Menus)
+                {
+                    menu.IsSelected = menu == value;
+                }
+                OnPropertyChanged();
+                OnPropertyChanged(nameof(Menus));
+            }
+        }
+        private Classes.Menu _selectedMenu;
+
+        private RelayCommand _switchSidebarCommand;
+        public RelayCommand SwitchSidebarCommand
+        {
+            get
+            {
+                return _switchSidebarCommand ??
+                  (_switchSidebarCommand = new RelayCommand(obj =>
+                  {
+                      DoubleAnimation animation = new DoubleAnimation();
+                      animation.From = _parentWindow.SidebarGrid.Width;
+                      if (_sidebarIsOpened) animation.To = 65;
+                      else animation.To = 250;
+                      _sidebarIsOpened = !_sidebarIsOpened;
+                      animation.Duration = new Duration(new TimeSpan(0, 0, 0, 0, 300));
+                      animation.FillBehavior = FillBehavior.HoldEnd;
+                      ExponentialEase ease = new ExponentialEase();
+                      ease.EasingMode = EasingMode.EaseInOut;
+                      ease.Exponent = 5;
+                      animation.EasingFunction = ease;
+                      _parentWindow.SidebarGrid.BeginAnimation(Grid.WidthProperty, animation);
+                  }));
+            }
+        }
+
         public void Initalize(MainWindow parentWindow)
         {
             _parentWindow = parentWindow;
             _windowResizer = new WindowResizer(parentWindow);
+
+            SelectedMenu = Menus[0];
 
             parentWindow.StateChanged += (o, e) => UpdateWindowBorder();
             parentWindow.SizeChanged += (o, e) => UpdateWindowBorder();
@@ -134,6 +222,7 @@ namespace Binder.Windows
         }
 
         private MainWindow _parentWindow;
+        private bool _sidebarIsOpened = false;
 
 
         private void UpdateWindowBorder()
@@ -141,6 +230,7 @@ namespace Binder.Windows
             OnPropertyChanged(nameof(UniformCornerRadius));
             OnPropertyChanged(nameof(TopRightCornerRadius));
             OnPropertyChanged(nameof(TopCornerRadius));
+            OnPropertyChanged(nameof(BottomCornerRadius));
             OnPropertyChanged(nameof(ShadowThickness));
         }
     }

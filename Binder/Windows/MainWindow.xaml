@@ -5,11 +5,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Binder.Windows"
         mc:Ignorable="d"
-        Title="Light Binder" Height="450" Width="800" WindowStyle="None"
+        Title="Light Binder" Height="650" Width="800" WindowStyle="None"
+        MinHeight="605" MinWidth="900"
         Style="{StaticResource MaterialDesignWindow}"
         AllowsTransparency="True"
         xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
         xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:fluent="clr-namespace:SourceChord.FluentWPF;assembly=FluentWPF"
         Background="Transparent">
     <Window.DataContext>
         <local:MainWindowVM/>
@@ -27,7 +29,8 @@
                     <RowDefinition Height="30"/>
                     <RowDefinition/>
                 </Grid.RowDefinitions>
-                <Border Background="{StaticResource MaterialDesignDarkSeparatorBackground}" CornerRadius="{Binding TopCornerRadius, UpdateSourceTrigger=PropertyChanged}">
+                
+                <Border Background="{StaticResource AttentionToActionBrush}" CornerRadius="{Binding TopCornerRadius, UpdateSourceTrigger=PropertyChanged}">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="30"/>
@@ -45,6 +48,65 @@
                         <Button Style="{StaticResource MaterialDesignFlatButton}" Grid.Column="2" Padding="0" WindowChrome.IsHitTestVisibleInChrome="True" md:ButtonAssist.CornerRadius="0" Command="{Binding MinimizeWindowCommand}">
                             <iconPacks:Material Kind="WindowMinimize" Height="15"/>
                         </Button>
+                    </Grid>
+                </Border>
+                <Border Grid.Row="1" CornerRadius="{Binding BottomCornerRadius, UpdateSourceTrigger=PropertyChanged}" Background="{StaticResource MaterialDesignDarkSeparatorBackground}">
+                    <Grid>
+                        <Grid Grid.Row="1" Name="MainContentView">
+
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition/>
+                            </Grid.ColumnDefinitions>
+
+                            <!--#region Column0 - menu selector-->
+
+                            <Grid x:Name="SidebarGrid" Grid.Column="0" Width="65">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="60"/>
+                                    <RowDefinition Height="60"/>
+                                    <RowDefinition/>
+                                    <RowDefinition Height="65"/>
+                                </Grid.RowDefinitions>
+
+                                <TextBlock Text="*ЛОГО*" FontSize="30" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+
+
+                                <ToggleButton Command="{Binding SwitchSidebarCommand}" Style="{StaticResource MaterialDesignHamburgerToggleButton}" Width="Auto" Grid.Row="1"/>
+
+                                <ListBox Grid.Row="2" ItemsSource="{Binding Menus, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding SelectedMenu, UpdateSourceTrigger=PropertyChanged}" Background="Transparent" BorderThickness="0" ScrollViewer.HorizontalScrollBarVisibility="Disabled" Style="{StaticResource MaterialDesignListBox}">
+                                    <ListBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <StackPanel Orientation="Horizontal" Background="Transparent" Height="60">
+                                                <ContentControl Content="{Binding Icon, UpdateSourceTrigger=PropertyChanged}" Height="30" Width="30" Margin="10, 0, 10, 0"/>
+                                                <TextBlock Text="{Binding Label, UpdateSourceTrigger=PropertyChanged}" FontSize="22" VerticalAlignment="Center" Margin="5, 0, 0, 0" FontWeight="Bold" Foreground="LightGray"/>
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </ListBox.ItemTemplate>
+                                </ListBox>
+
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="65"/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+
+
+
+                                </Grid>
+
+                            </Grid>
+
+                            <!--#endregion-->
+
+
+                            <Border Grid.Column="1" BorderThickness="1 1 0 0" CornerRadius="10 0 0 0" BorderBrush="{StaticResource MaterialDesignDarkSeparatorBackground}" Background="{StaticResource MaterialDesignDarkBackground}">
+                                <ContentPresenter x:Name="MainPanel" Content="{Binding SelectedMenu.Content, UpdateSourceTrigger=PropertyChanged}"/>
+                            </Border>
+
+
+                        </Grid>
+
                     </Grid>
                 </Border>
                 
