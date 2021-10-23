@@ -2,7 +2,7 @@
 using System.Drawing;
 using System.Runtime.InteropServices;
 
-namespace Binder
+namespace Binder.Environment
 {
     public enum TaskbarPosition
     {
