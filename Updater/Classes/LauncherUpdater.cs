@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
@@ -10,10 +11,11 @@ namespace Updater
 {
     class LauncherUpdater
     {
-        public async Task UpdaterLauncher()
+        private string _urlFiles = "https://rqsteam.tk/binder/Updater";
+        public async Task UpdaterLauncher(MainWindow _parentWindow)
         {
             string path = Directory.GetCurrentDirectory();
-            XmlTextReader reader = new XmlTextReader(@"https://lightlauncher.pro/assets/LauncherUpdater/meta.xml");
+            XmlTextReader reader = new XmlTextReader(_urlFiles + "/meta.xml");
             List<string> filespath = new List<string>();
             List<string> fileshash = new List<string>();
             while (reader.Read())
@@ -45,19 +47,21 @@ namespace Updater
                     {
                         if (fileshash[i] != ComputeMD5Checksum(path + filespath[i]))
                         {
-                            await WorkingWithFiles.DownloadFile("http://lightlauncher.pro/assets/LauncherUpdater" + filespath[i], path + filespath[i]);
+                            await WorkingWithFiles.DownloadFile(_urlFiles + filespath[i], path + filespath[i]);
                         }
                     }
                     else
                     {
-                        await WorkingWithFiles.DownloadFile("http://lightlauncher.pro/assets/LauncherUpdater" + filespath[i], path + filespath[i]);
+                        await WorkingWithFiles.DownloadFile(_urlFiles + filespath[i], path + filespath[i]);
                     }
                 }
+                Process.Start(Directory.GetCurrentDirectory() + "\\Binder.exe");
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
+            _parentWindow.Dispatcher.Invoke(() => Application.Current.Shutdown());
         }
 
         public static string ComputeMD5Checksum(string path)

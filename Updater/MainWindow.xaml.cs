@@ -3,9 +3,6 @@ using System.Windows;
 
 namespace Updater
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
         public MainWindow()
@@ -13,13 +10,13 @@ namespace Updater
             InitializeComponent();
             WorkingWithFiles.eventPercentAndSpeedOnChange += setPercentAndSpeed;
             LauncherUpdater launcher = new LauncherUpdater();
-            Task.Run(() => launcher.UpdaterLauncher());
+            Task.Run(() => launcher.UpdaterLauncher(this));
         }
 
         public void setPercentAndSpeed(double percent)
         {
-            this.Dispatcher.Invoke(() => percent_text.Content = ((int)percent).ToString() + "%");
-            this.Dispatcher.Invoke(() => progressbar.Value = percent);
+            Dispatcher.Invoke(() => percent_text.Content = ((int)percent).ToString() + "%");
+            Dispatcher.Invoke(() => progressbar.Value = percent);
         }
     }
 }

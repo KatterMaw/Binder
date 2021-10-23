@@ -6,10 +6,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Updater"
         Title="MainWindow" Height="385" Width="297" WindowStyle="None" ResizeMode="NoResize" Background="Transparent" AllowsTransparency="True" WindowStartupLocation="CenterScreen">
-    <Border Background="#221e1f" Width="Auto" Height="Auto" BorderThickness="1" CornerRadius="10">
+    <Border Margin="10" Background="#1e2124" Width="Auto" Height="Auto" BorderThickness="1" CornerRadius="10">
+        <Border.Effect>
+            <DropShadowEffect BlurRadius="10" Opacity="0.5"/>
+        </Border.Effect>
         <Grid>
-            <ProgressBar x:Name="progressbar" Style="{StaticResource MaterialDesignCircularProgressBar}" Value="0" IsIndeterminate="True" Width="130" Height="130" Margin="82,126,83,127" Foreground="#FF9E2D2D" />
-            <Label x:Name="percent_text" Content="0%" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="22"/>
+            <ProgressBar x:Name="progressbar" Style="{StaticResource MaterialDesignCircularProgressBar}" Value="0" IsIndeterminate="True" Width="130" Height="130" Margin="72,116,73,117" Foreground="#6fc1d6" BorderBrush="#FF6FC1D6" />
+            <Label x:Name="percent_text" Content="0%" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="22" Foreground="#FF6FC1D6"/>
         </Grid>
     </Border>
 </Window>
