@@ -1,5 +1,5 @@
 ﻿using Binder.Pages;
-using Binder.Stuff;
+using Binder.UI;
 using MahApps.Metro.IconPacks;
 using System;
 using System.Collections.Generic;
@@ -132,45 +132,45 @@ namespace Binder.Windows
 
         #endregion
 
-        public Classes.Menu[] Menus { get; set; } = new Classes.Menu[5]
+        public UI.Menu[] Menus { get; set; } = new UI.Menu[5]
             {
-                new Classes.Menu(
+                new UI.Menu(
                     "Главная",
                     PackIconMaterialKind.Home,
                     PackIconMaterialKind.HomeOutline,
                     new HomePage()),
 
-                new Classes.Menu(
+                new UI.Menu(
                     "Бинды",
                     PackIconMaterialKind.None,
                     PackIconMaterialKind.None,
                     new BindsPage()),
 
-                new Classes.Menu(
+                new UI.Menu(
                     "Команды",
                     PackIconMaterialKind.None,
                     PackIconMaterialKind.None,
                     new CommandsPage()),
 
-                new Classes.Menu(
+                new UI.Menu(
                     "Оверлей",
                     PackIconMaterialKind.None,
                     PackIconMaterialKind.None,
                     new OverlayPage()),
 
-                new Classes.Menu(
+                new UI.Menu(
                     "Настройки",
                     PackIconMaterialKind.Cog,
                     PackIconMaterialKind.CogOutline,
                     new SettingsPage())
             };
-        public Classes.Menu SelectedMenu
+        public UI.Menu SelectedMenu
         {
             get => _selectedMenu;
             set
             {
                 _selectedMenu = value;
-                foreach (Classes.Menu menu in Menus)
+                foreach (UI.Menu menu in Menus)
                 {
                     menu.IsSelected = menu == value;
                 }
@@ -178,7 +178,7 @@ namespace Binder.Windows
                 OnPropertyChanged(nameof(Menus));
             }
         }
-        private Classes.Menu _selectedMenu;
+        private UI.Menu _selectedMenu;
 
         private RelayCommand _switchSidebarCommand;
         public RelayCommand SwitchSidebarCommand

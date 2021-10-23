@@ -7,8 +7,14 @@
             <DropShadowEffect BlurRadius="10" Opacity="0.5" ShadowDepth="0"/>
         </Border.Effect>
         <Grid>
-            <ProgressBar x:Name="progressbar" Style="{StaticResource MaterialDesignCircularProgressBar}" Value="0" IsIndeterminate="True" Width="130" Height="130" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="#6fc1d6" BorderBrush="#FF6FC1D6" />
-            <Label x:Name="percent_text" Content="0%" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="22" Foreground="#FF6FC1D6"/>
+            <ProgressBar x:Name="progressbar" Style="{StaticResource MaterialDesignCircularProgressBar}" Value="0" IsIndeterminate="True" Width="130" Height="130" VerticalAlignment="Center" HorizontalAlignment="Center" Foreground="#00b8d4">
+                <ProgressBar.Effect>
+                    <DropShadowEffect BlurRadius="10" Opacity="0.5"/>
+                </ProgressBar.Effect>
+            </ProgressBar>
+            <Label x:Name="percent_text" Content="0%" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="22" Foreground="#00b8d4" FontWeight="Bold">
+                <Label.Effect
+            </Label>
         </Grid>
     </Border>
 </Window>
