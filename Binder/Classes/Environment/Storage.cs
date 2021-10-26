@@ -34,6 +34,8 @@ namespace Binder.Environment
                     _instance = StorageFromFileOrDefault;
                     _instance.AddCollectionChangedHandlers();
                 }
+
+                if (_instance.Profiles.Count == 0) _instance.Profiles.Add(Profile.New);
                 return _instance;
             }
         }
@@ -43,7 +45,7 @@ namespace Binder.Environment
         #region Storage fields
 
         private ObservableCollection<Profile> _profiles = new ObservableCollection<Profile> { };
-        internal ObservableCollection<Profile> Profiles
+        public ObservableCollection<Profile> Profiles
         {
             get => _profiles;
             set
@@ -54,8 +56,21 @@ namespace Binder.Environment
             }
         }
 
+        private Profile _selectedProfile;
+        public Profile SelectedProfile
+        {
+            get => _selectedProfile;
+            set
+            {
+                _selectedProfile = value;
+                OnPropertyChanged();
+                RaiseSave();
+            }
+        }
+
+
         private ImageImportConverting _imageImportConverting = ImageImportConverting.DontConvert;
-        internal ImageImportConverting ImageImportConverting
+        public ImageImportConverting ImageImportConverting
         {
             get => _imageImportConverting;
             set
@@ -167,6 +182,7 @@ namespace Binder.Environment
         }
         private static void Save()
         {
+            if (!_dataFile.Directory.Exists) _dataFile.Directory.Create();
             using (StreamWriter stream = new StreamWriter(_dataFile.FullName, false))
             {
                 stream.Write(_serializedInstance);
@@ -177,7 +193,20 @@ namespace Binder.Environment
         {
             if (_dataFile.Exists)
             {
-                resultStorage = JsonConvert.DeserializeObject<Storage>(File.ReadAllText(_dataFile.FullName));
+                while (true)
+                {
+                    try
+                    {
+                        resultStorage = JsonConvert.DeserializeObject<Storage>(File.ReadAllText(_dataFile.FullName));
+                        break;
+                    }
+                    catch
+                    {
+
+                    }
+                }
+                
+
                 return resultStorage != null;
             }
             else

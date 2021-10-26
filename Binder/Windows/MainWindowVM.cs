@@ -1,4 +1,5 @@
-﻿using Binder.Pages;
+﻿using Binder.Environment;
+using Binder.Pages;
 using Binder.UI;
 using MahApps.Metro.IconPacks;
 using System;
@@ -203,6 +204,8 @@ namespace Binder.Windows
                   }));
             }
         }
+
+        public Storage Storage => Storage.Instance;
 
         public void Initalize(MainWindow parentWindow)
         {

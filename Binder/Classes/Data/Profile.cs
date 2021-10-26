@@ -15,7 +15,7 @@ namespace Binder.Classes.Data
     {
         private const int ImageSize = 30;
 
-        internal Profile New
+        public static Profile New
         {
             get
             {
@@ -24,7 +24,7 @@ namespace Binder.Classes.Data
         }
 
         private string _name;
-        internal string Name
+        public string Name
         {
             get => _name;
             set
@@ -33,14 +33,14 @@ namespace Binder.Classes.Data
                 OnPropertyChanged();
                 Storage.RaiseSave();
 
-                if (value.Length == 0) FirstCharInName = ' ';
+                if (value == null || value.Length == 0) FirstCharInName = ' ';
                 else FirstCharInName = value.ElementAt(0);
             }
         }
 
         [JsonIgnore]
         private char _firstCharInName;
-        internal char FirstCharInName
+        public char FirstCharInName
         {
             get => _firstCharInName;
             private set
@@ -50,13 +50,13 @@ namespace Binder.Classes.Data
             }
         }
 
-        internal Color BackgroundColor { get; init; }
+        public Color BackgroundColor { get; init; }
 
-        internal Guid Id { get; init; }
+        public Guid Id { get; init; }
 
-        internal ObservableCollection<Bind> Binds { get; init; }
+        public ObservableCollection<Bind> Binds { get; init; }
 
-        internal ObservableCollection<Abbreviation> Abbreviations { get; init; }
+        public ObservableCollection<Abbreviation> Abbreviations { get; init; }
 
         [JsonIgnore]
         internal string ImagePath

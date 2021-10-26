@@ -6,10 +6,19 @@
              xmlns:local="clr-namespace:Binder.UserControls"
              mc:Ignorable="d" 
              d:DesignHeight="50" d:DesignWidth="50">
-    <UserControl.DataContext>
-        <local:ProfileImageVM/>
-    </UserControl.DataContext>
     <Grid>
-            
+        <Rectangle Fill="AliceBlue"/>
+        <Path Fill="Red">
+            <Path.Data>
+                <CombinedGeometry GeometryCombineMode="Exclude">
+                    <CombinedGeometry.Geometry1>
+                        <RectangleGeometry/>
+                    </CombinedGeometry.Geometry1>
+                    <CombinedGeometry.Geometry2>
+                        <EllipseGeometry/>
+                    </CombinedGeometry.Geometry2>
+                </CombinedGeometry>
+            </Path.Data>
+        </Path>
     </Grid>
 </UserControl>

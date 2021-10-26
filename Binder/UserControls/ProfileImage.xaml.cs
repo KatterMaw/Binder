@@ -19,30 +19,32 @@ namespace Binder.UserControls
     /// <summary>
     /// Представляет картинку в круглой форме, или, если картинки нет, цветной задник с первой буквой названия профиля
     /// </summary>
-    internal partial class ProfileImage : UserControl
+    public partial class ProfileImage : UserControl
     {
-        internal static readonly DependencyProperty ProfileProperty;
+        internal static readonly DependencyProperty ImageProperty;
 
         static ProfileImage()
         {
-            ProfileProperty = DependencyProperty.Register("Profile", typeof(Profile), typeof(ProfileImage), new FrameworkPropertyMetadata(OnProfileChanged));
+            ImageProperty = DependencyProperty.Register("Profile", typeof(BitmapImage), typeof(ProfileImage), new FrameworkPropertyMetadata(OnImageChanged));
         }
 
 
-        internal Profile Profile
+        internal BitmapImage Image
         {
-            get => (Profile)GetValue(ProfileProperty);
-            set => SetValue(ProfileProperty, value);
+            get => (BitmapImage)GetValue(ImageProperty);
+            set
+            {
+                SetValue(ImageProperty, value);
+                //Img.Source = value;
+            }
         }
 
         internal ProfileImage()
         {
             InitializeComponent();
-
-            ((ProfileImageVM)DataContext).Initialize(this);
         }
 
-        private static void OnProfileChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        private static void OnImageChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             
         }

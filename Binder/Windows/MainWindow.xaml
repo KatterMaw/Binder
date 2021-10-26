@@ -85,6 +85,15 @@
                                         </DataTemplate>
                                     </ListBox.ItemTemplate>
                                 </ListBox>
+
+                                <ListBox Grid.Row="3" ItemsSource="{Binding Storage.Profiles, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding Storage.SelectedProfile, UpdateSourceTrigger=PropertyChanged}" Cursor="Hand">
+                                    <ListBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <userControls:ProfileImage/>
+                                        </DataTemplate>
+                                    </ListBox.ItemTemplate>
+                                </ListBox>
+                                
                                 <Grid>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="65"/>
