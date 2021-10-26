@@ -1,6 +1,7 @@
 ﻿using Binder.Environment;
 using System;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Runtime.InteropServices;
@@ -45,6 +46,46 @@ namespace Binder
                 bitmapImage.EndInit();
                 bitmapImage.Freeze();
                 return bitmapImage;
+            }
+        }
+
+        public static Bitmap ResizeBitmap(this Bitmap bitmap, Size newSize)
+        {
+            double ratio = 0d;
+            double myThumbWidth = 0d;
+            double myThumbHeight = 0d;
+
+            Bitmap resultBitmap;
+
+            if ((bitmap.Width / Convert.ToDouble(newSize.Width)) > (bitmap.Height /
+            Convert.ToDouble(newSize.Height)))
+                ratio = Convert.ToDouble(bitmap.Width) / Convert.ToDouble(newSize.Width);
+            else
+                ratio = Convert.ToDouble(bitmap.Height) / Convert.ToDouble(newSize.Height);
+            myThumbHeight = Math.Ceiling(bitmap.Height / ratio);
+            myThumbWidth = Math.Ceiling(bitmap.Width / ratio);
+
+            Size thumbSize = new Size((int)newSize.Width, (int)newSize.Height);
+            resultBitmap = new Bitmap(newSize.Width, newSize.Height);
+            int x = (newSize.Width - thumbSize.Width) / 2;
+            int y = (newSize.Height - thumbSize.Height);
+            // Had to add System.Drawing class in front of Graphics ---
+            Graphics graphics = Graphics.FromImage(resultBitmap);
+            graphics.SmoothingMode = SmoothingMode.HighQuality;
+            graphics.InterpolationMode = InterpolationMode.HighQualityBicubic;
+            graphics.PixelOffsetMode = PixelOffsetMode.HighQuality;
+            Rectangle rect = new Rectangle(x, y, thumbSize.Width, thumbSize.Height);
+            graphics.DrawImage(bitmap, rect, 0, 0, bitmap.Width, bitmap.Height, GraphicsUnit.Pixel);
+
+            return resultBitmap;
+        }
+
+        public static Bitmap GetBitmapFromFile(string path)
+        {
+            if (!File.Exists(path)) throw new IOException("File path doest not exists");
+            using (MemoryStream stream = new MemoryStream(File.ReadAllBytes(path)))
+            {
+                return new Bitmap(stream);
             }
         }
 

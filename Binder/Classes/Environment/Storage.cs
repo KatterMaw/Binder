@@ -7,9 +7,17 @@ using System.Threading.Tasks;
 using System.Windows.Threading;
 using Binder;
 using Binder.UI;
+using Binder.Classes.Data;
 
 namespace Binder.Environment
 {
+    internal enum ImageImportConverting
+    {
+        DontConvert,
+        ConvertToPng,
+        ConvertToJpg
+    }
+
     /// <summary>
     /// Contains data between sessions
     /// </summary>
@@ -24,7 +32,7 @@ namespace Binder.Environment
                 if (_instance == null)
                 {
                     _instance = StorageFromFileOrDefault;
-                    InitializeInstance();
+                    _instance.AddCollectionChangedHandlers();
                 }
                 return _instance;
             }
@@ -33,13 +41,62 @@ namespace Binder.Environment
 
 
         #region Storage fields
-        
-        
 
-
-        private static void AddCollectionChangedHandlersToInstance()
+        private ObservableCollection<Profile> _profiles = new ObservableCollection<Profile> { };
+        internal ObservableCollection<Profile> Profiles
         {
-            
+            get => _profiles;
+            set
+            {
+                _profiles = value;
+                OnPropertyChanged();
+                RaiseSave();
+            }
+        }
+
+        private ImageImportConverting _imageImportConverting = ImageImportConverting.DontConvert;
+        internal ImageImportConverting ImageImportConverting
+        {
+            get => _imageImportConverting;
+            set
+            {
+                _imageImportConverting = value;
+                OnPropertyChanged();
+                RaiseSave();
+            }
+        }
+
+        private bool _convertAlreadyImportedImagesIfFound = false;
+        public bool ConvertAlreadyImportedImagesIfFound
+        {
+            get => _convertAlreadyImportedImagesIfFound;
+            set
+            {
+                _convertAlreadyImportedImagesIfFound = value;
+                OnPropertyChanged();
+                RaiseSave();
+            }
+        }
+
+        private bool _resizeImagesWhenImporting = true;
+        public bool ResizeImagesWhenImporting
+        {
+            get => _resizeImagesWhenImporting;
+            set
+            {
+                _resizeImagesWhenImporting = value;
+                OnPropertyChanged();
+                RaiseSave();
+            }
+        }
+
+        private void AddCollectionChangedHandlers()
+        {
+            Profiles.CollectionChanged += (o, e) =>
+            {
+                OnPropertyChanged(nameof(Profiles));
+                RaiseSave();
+            };
         }
         #endregion
 
@@ -129,22 +186,7 @@ namespace Binder.Environment
                 return false;
             }
         }
-        private static void InitializeInstance()
-        {
-            while (true)
-            {
-                try
-                {
-                    AddCollectionChangedHandlersToInstance();
-                    break;
-                }
-                catch
-                {
-                    RecreateInstance();
-                    continue;
-                }
-            }
-        }
+        
         private static void RecreateInstance()
         {
             _instance = _default;
