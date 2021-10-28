@@ -11,7 +11,6 @@
         AllowsTransparency="True"
         xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
         xmlns:md="http://materialdesigninxaml.net/winfx/xaml/themes"
-        xmlns:userControls="clr-namespace:Binder.UserControls"
         Background="Transparent">
     <Window.DataContext>
         <local:MainWindowVM/>
@@ -66,19 +65,30 @@
                                     <RowDefinition Height="60"/>
                                     <RowDefinition Height="60"/>
                                     <RowDefinition Height="Auto"/>
-                                    <RowDefinition Height="65"/>
+                                    <RowDefinition Height="Auto"/>
                                     <RowDefinition/>
                                 </Grid.RowDefinitions>
 
-                                <TextBlock Text="*ЛОГО*" FontSize="30" FontWeight="Bold" VerticalAlignment="Center" HorizontalAlignment="Center"/>
 
+
+                                
+
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="65"/>
+                                        <ColumnDefinition/>
+                                    </Grid.ColumnDefinitions>
+                                    <ContentControl Content="{StaticResource FoxLogo}" Margin="5"/>
+                                    <TextBlock Text="MIUW" Grid.Column="1" FontSize="22" VerticalAlignment="Bottom" Margin="0 0 0 12" FontWeight="Light">
+                                    </TextBlock>
+                                </Grid>
 
                                 <ToggleButton Command="{Binding SwitchSidebarCommand}" Style="{StaticResource MaterialDesignHamburgerToggleButton}" Width="Auto" Grid.Row="1" Cursor="Hand"/>
 
                                 <ListBox Grid.Row="2" ItemsSource="{Binding Menus, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding SelectedMenu, UpdateSourceTrigger=PropertyChanged}" Background="Transparent" BorderThickness="0" ScrollViewer.HorizontalScrollBarVisibility="Disabled" Style="{StaticResource MaterialDesignListBox}" Cursor="Hand">
                                     <ListBox.ItemTemplate>
                                         <DataTemplate>
-                                            <StackPanel Orientation="Horizontal" Background="Transparent" Height="60">
+                                            <StackPanel Orientation="Horizontal" Background="Transparent" Height="50">
                                                 <ContentControl Content="{Binding Icon, UpdateSourceTrigger=PropertyChanged}" Height="30" Width="30" Margin="10, 0, 10, 0"/>
                                                 <TextBlock Text="{Binding Label, UpdateSourceTrigger=PropertyChanged}" FontSize="22" VerticalAlignment="Center" Margin="5, 0, 0, 0" FontWeight="Bold" Foreground="LightGray"/>
                                             </StackPanel>
@@ -86,10 +96,21 @@
                                     </ListBox.ItemTemplate>
                                 </ListBox>
 
-                                <ListBox Grid.Row="3" ItemsSource="{Binding Storage.Profiles, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding Storage.SelectedProfile, UpdateSourceTrigger=PropertyChanged}" Cursor="Hand">
+                                <ListBox Margin="0 20 0 0" Grid.Row="3" ItemsSource="{Binding Storage.Profiles, UpdateSourceTrigger=PropertyChanged}" SelectedItem="{Binding Storage.SelectedProfile, UpdateSourceTrigger=PropertyChanged}" Cursor="Hand">
                                     <ListBox.ItemTemplate>
                                         <DataTemplate>
-                                            <userControls:ProfileImage/>
+                                            <Grid ShowGridLines="False">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="Auto"/>
+                                                    <ColumnDefinition/>
+                                                </Grid.ColumnDefinitions>
+                                                <Image Source="C:\Users\user\Downloads\unnamed.jpg" Margin="5" Width="40" Height="40" Stretch="UniformToFill" VerticalAlignment="Center" HorizontalAlignment="Center">
+                                                    <Image.Clip>
+                                                        <EllipseGeometry RadiusX="20" RadiusY="20" Center="20 20"/>
+                                                    </Image.Clip>
+                                                </Image>
+                                                <TextBlock Text="LSPD" Grid.Column="1" VerticalAlignment="Center" Margin="20 0 0 0" FontSize="20"/>
+                                            </Grid>
                                         </DataTemplate>
                                     </ListBox.ItemTemplate>
                                 </ListBox>

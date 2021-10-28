@@ -139,30 +139,40 @@ namespace Binder.Windows
                     "Главная",
                     PackIconMaterialKind.Home,
                     PackIconMaterialKind.HomeOutline,
+                    PackIconBootstrapIconsKind.HouseFill,
+                    PackIconBootstrapIconsKind.House,
                     new HomePage()),
 
                 new UI.Menu(
                     "Бинды",
                     PackIconMaterialKind.None,
                     PackIconMaterialKind.None,
+                    PackIconBootstrapIconsKind.BookmarksFill,
+                    PackIconBootstrapIconsKind.Bookmarks,
                     new BindsPage()),
 
                 new UI.Menu(
                     "Команды",
                     PackIconMaterialKind.None,
                     PackIconMaterialKind.None,
+                    PackIconBootstrapIconsKind.TerminalFill,
+                    PackIconBootstrapIconsKind.Terminal,
                     new CommandsPage()),
 
                 new UI.Menu(
                     "Оверлей",
                     PackIconMaterialKind.None,
                     PackIconMaterialKind.None,
+                    PackIconBootstrapIconsKind.CollectionFill,
+                    PackIconBootstrapIconsKind.Collection,
                     new OverlayPage()),
 
                 new UI.Menu(
                     "Настройки",
                     PackIconMaterialKind.Cog,
                     PackIconMaterialKind.CogOutline,
+                    PackIconBootstrapIconsKind.GearFill,
+                    PackIconBootstrapIconsKind.Gear,
                     new SettingsPage())
             };
         public UI.Menu SelectedMenu

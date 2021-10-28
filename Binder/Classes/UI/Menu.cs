@@ -6,6 +6,8 @@ namespace Binder.UI
 {
     class Menu : ViewModel
     {
+        private const int IconsSize = 25;
+
         public string Label { get; init; }
         private bool _isSelected = false;
         public bool IsSelected
@@ -17,34 +19,45 @@ namespace Binder.UI
                 OnPropertyChanged(nameof(Icon));
             }
         }
-        public PackIconMaterial Icon
+
+
+        public PackIconControlBase Icon => BootstrapIcon;
+
+        private PackIconMaterial MaterialIcon
         {
             get
             {
-                if (IsSelected)
-                {
-                    return _activatedIcon;
-                }
-                else
-                {
-                    return _deactivatedIcon;
-                }
+                return IsSelected ? _activatedMaterialIcon : _deactivatedMaterialIcon;
             }
         }
+        private PackIconBootstrapIcons BootstrapIcon
+        {
+            get
+            {
+                return IsSelected ? _activatedBootstrapIcon : _deactivatedBootstrapIcon;
+            }
+        }
+
+
         public UserControl Content { get; init; }
 
 
-        public Menu(string label, PackIconMaterialKind activatedIcon, PackIconMaterialKind deactivatedIcon, UserControl content)
+        public Menu(string label, PackIconMaterialKind activatedMaterialIcon, PackIconMaterialKind deactivatedMaterialIcon, PackIconBootstrapIconsKind activatedBootstrapIcon, PackIconBootstrapIconsKind deactivatedBootstrapIcon, UserControl content)
         {
             Label = label;
-            _activatedIcon = new PackIconMaterial() { Kind = activatedIcon, VerticalContentAlignment = System.Windows.VerticalAlignment.Stretch, Width = 30, Height = 30 };
-            _deactivatedIcon = new PackIconMaterial() { Kind = deactivatedIcon, VerticalContentAlignment = System.Windows.VerticalAlignment.Stretch, Width = 30, Height = 30 };
+            _activatedMaterialIcon = new PackIconMaterial() { Kind = activatedMaterialIcon, VerticalContentAlignment = System.Windows.VerticalAlignment.Stretch, HorizontalAlignment = System.Windows.HorizontalAlignment.Center, VerticalAlignment = System.Windows.VerticalAlignment.Center, Width = IconsSize, Height = IconsSize };
+            _deactivatedMaterialIcon = new PackIconMaterial() { Kind = deactivatedMaterialIcon, VerticalContentAlignment = System.Windows.VerticalAlignment.Stretch, HorizontalAlignment = System.Windows.HorizontalAlignment.Center, VerticalAlignment = System.Windows.VerticalAlignment.Center, Width = IconsSize, Height = IconsSize };
+            _activatedBootstrapIcon = new PackIconBootstrapIcons() { Kind = activatedBootstrapIcon, VerticalContentAlignment = System.Windows.VerticalAlignment.Stretch, HorizontalAlignment = System.Windows.HorizontalAlignment.Center, VerticalAlignment = System.Windows.VerticalAlignment.Center, Width = IconsSize, Height = IconsSize };
+            _deactivatedBootstrapIcon = new PackIconBootstrapIcons() { Kind = deactivatedBootstrapIcon, VerticalContentAlignment = System.Windows.VerticalAlignment.Stretch, HorizontalAlignment = System.Windows.HorizontalAlignment.Center, VerticalAlignment = System.Windows.VerticalAlignment.Center, Width = IconsSize, Height = IconsSize };
             Content = content;
         }
 
 
         
-        private PackIconMaterial _activatedIcon;
-        private PackIconMaterial _deactivatedIcon;
+        private PackIconMaterial _activatedMaterialIcon;
+        private PackIconMaterial _deactivatedMaterialIcon;
+
+        private PackIconBootstrapIcons _activatedBootstrapIcon;
+        private PackIconBootstrapIcons _deactivatedBootstrapIcon;
     }
 }
