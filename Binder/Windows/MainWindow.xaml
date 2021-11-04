@@ -133,7 +133,7 @@
                                                     <iconPacks:PackIconBootstrapIcons Kind="Trash"/>
                                                 </StackPanel>
                                                 <Button.ToolTip>
-                                                    <ToolTip Background="{StaticResource AttentionToActionBrush}" Foreground="{StaticResource MaterialDesignDarkForeground}" Content="Удалить выбранный профиль(требуется подтверждение)"/>
+                                                    <ToolTip Background="{StaticResource AttentionToActionBrush}" Foreground="{StaticResource MaterialDesignDarkForeground}" Content="Удалить выбранный профиль"/>
                                                 </Button.ToolTip>
                                             </Button>
                                             <Button Style="{StaticResource MaterialDesignFlatAccentButton}" md:ButtonAssist.CornerRadius="0">
