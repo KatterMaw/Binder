@@ -5,7 +5,9 @@
     <TargetFramework>net5.0-windows</TargetFramework>
 	<UseWindowsForms>true</UseWindowsForms>
     <UseWPF>true</UseWPF>
-    <ApplicationIcon>FoxLogo128.ico</ApplicationIcon>
+    <ApplicationIcon>23.ico</ApplicationIcon>
+    <AssemblyName>MIUW</AssemblyName>
+    <Win32Resource />
   </PropertyGroup>
 
   <ItemGroup>

@@ -21,14 +21,14 @@ namespace Binder.Classes.Data
         {
             get
             {
-                return new Profile("", new SolidColorBrush(System.Windows.Media.Color.FromArgb(255, (byte)Utils.Random.Next(50, 150), (byte)Utils.Random.Next(50, 150), (byte)Utils.Random.Next(50, 150))), Guid.NewGuid(), new ObservableCollection<Bind> { }, new ObservableCollection<Abbreviation> { });
+                return new Profile("", new SolidColorBrush(System.Windows.Media.Color.FromRgb((byte)Utils.Random.Next(50, 150), (byte)Utils.Random.Next(50, 150), (byte)Utils.Random.Next(50, 150))), Guid.NewGuid(), new ObservableCollection<Bind> { }, new ObservableCollection<Abbreviation> { });
             }
         }
         public static Profile NewTemp
         {
             get
             {
-                return new Profile("", new SolidColorBrush(System.Windows.Media.Color.FromArgb(255, (byte)Utils.Random.Next(50, 150), (byte)Utils.Random.Next(50, 150), (byte)Utils.Random.Next(50, 150))), Guid.NewGuid(), new ObservableCollection<Bind> { }, new ObservableCollection<Abbreviation> { }, false);
+                return new Profile("", new SolidColorBrush(System.Windows.Media.Color.FromRgb((byte)Utils.Random.Next(50, 150), (byte)Utils.Random.Next(50, 150), (byte)Utils.Random.Next(50, 150))), Guid.NewGuid(), new ObservableCollection<Bind> { }, new ObservableCollection<Abbreviation> { }, false);
             }
         }
         private string _name;
@@ -45,8 +45,8 @@ namespace Binder.Classes.Data
             }
         }
 
-        [JsonIgnore]
         private char _firstCharInName;
+        [JsonIgnore]
         public char FirstCharInName
         {
             get => _firstCharInName;
@@ -180,8 +180,5 @@ namespace Binder.Classes.Data
         {
             Dispose(false);
         }
-
-
-
     }
 }

@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Binder.Windows"
         mc:Ignorable="d"
-        Title="Light Binder" Height="650" Width="800" WindowStyle="None"
+        Title="MIUW Binder" Height="650" Width="800" WindowStyle="None"
         MinHeight="605" MinWidth="900"
         Style="{StaticResource MaterialDesignWindow}"
         AllowsTransparency="True"

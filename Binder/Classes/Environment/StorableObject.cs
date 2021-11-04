@@ -82,7 +82,7 @@ namespace Binder.Environment
         private static string[] GetFilesByType<T>()
         {
             string directoryPath = "Data/" + typeof(T).Name;
-            if (!Directory.Exists(directoryPath)) throw new IOException("Directory \"" + directoryPath + "\" not found");
+            if (!Directory.Exists(directoryPath)) return new string[0];
             string[] files = Directory.GetFiles(directoryPath);
             return files;
         }
@@ -145,7 +145,7 @@ namespace Binder.Environment
             _storableObjectsCache.Remove(Id);
             WeakEventManager<Timer, ElapsedEventArgs>.RemoveHandler(_autoSaveTimer, "Elapsed", _autoSaveTimer_Elapsed);
             WeakEventManager<Application, ExitEventArgs>.RemoveHandler(App.Current, "Exit", OnExitApp);
-            _autoSaveTimer.Dispose();
+            _autoSaveTimer?.Dispose();
 
 
             
@@ -155,16 +155,20 @@ namespace Binder.Environment
 
         private void Save(bool checkLenght)
         {
-            string serialized = _serialized;
-            if (!checkLenght || _lastLenght != serialized.Length)
+            App.Current.Dispatcher.Invoke(() =>
             {
-                if (!Directory.Exists("Data/" + GetType().Name)) Directory.CreateDirectory("Data/" + GetType().Name);
-                using (StreamWriter stream = new StreamWriter(_filePath, false))
+                string serialized = _serialized;
+                if (!checkLenght || _lastLenght != serialized.Length)
                 {
-                    stream.Write(serialized);
+                    if (!Directory.Exists("Data/" + GetType().Name)) Directory.CreateDirectory("Data/" + GetType().Name);
+                    using (StreamWriter stream = new StreamWriter(_filePath, false))
+                    {
+                        stream.Write(serialized);
+                    }
+                    _lastLenght = serialized.Length;
                 }
-                _lastLenght = serialized.Length;
-            }
+            });
+            
         }
 
         private void InitializeTimer()
