@@ -7,11 +7,13 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
+using System.Windows;
+using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
 namespace Binder.Classes.Data
 {
-    internal class Profile : ViewModel, IDisposable
+    internal class Profile : StorableObject
     {
         private const int ImageSize = 30;
 
@@ -19,10 +21,16 @@ namespace Binder.Classes.Data
         {
             get
             {
-                return new Profile("", Color.FromArgb(Utils.Random.Next(50, 150), Utils.Random.Next(50, 150), Utils.Random.Next(50, 150)), Guid.NewGuid(), new ObservableCollection<Bind> { }, new ObservableCollection<Abbreviation> { });
+                return new Profile("", new SolidColorBrush(System.Windows.Media.Color.FromArgb(255, (byte)Utils.Random.Next(50, 150), (byte)Utils.Random.Next(50, 150), (byte)Utils.Random.Next(50, 150))), Guid.NewGuid(), new ObservableCollection<Bind> { }, new ObservableCollection<Abbreviation> { });
             }
         }
-
+        public static Profile NewTemp
+        {
+            get
+            {
+                return new Profile("", new SolidColorBrush(System.Windows.Media.Color.FromArgb(255, (byte)Utils.Random.Next(50, 150), (byte)Utils.Random.Next(50, 150), (byte)Utils.Random.Next(50, 150))), Guid.NewGuid(), new ObservableCollection<Bind> { }, new ObservableCollection<Abbreviation> { }, false);
+            }
+        }
         private string _name;
         public string Name
         {
@@ -31,7 +39,6 @@ namespace Binder.Classes.Data
             {
                 _name = value;
                 OnPropertyChanged();
-                Storage.RaiseSave();
 
                 if (value == null || value.Length == 0) FirstCharInName = ' ';
                 else FirstCharInName = value.ElementAt(0);
@@ -50,9 +57,7 @@ namespace Binder.Classes.Data
             }
         }
 
-        public Color BackgroundColor { get; init; }
-
-        public Guid Id { get; init; }
+        public SolidColorBrush BackgroundBrush { get; init; }
 
         public ObservableCollection<Bind> Binds { get; init; }
 
@@ -82,77 +87,50 @@ namespace Binder.Classes.Data
             }
         }
 
-        
+        internal bool ImageFileIsExist => File.Exists(ImagePath);
+        internal Visibility CustomImageVisibility => ImageFileIsExist ? Visibility.Visible : Visibility.Collapsed;
+        internal Visibility DefaultImageVisibility => ImageFileIsExist ? Visibility.Collapsed : Visibility.Visible;
 
-        public void SetImage(string filePath)
+
+        internal void SetImage(string filePath)
         {
             if (!File.Exists(filePath)) throw new IOException($"File {filePath} don't exists");
 
-            if (!Storage.Instance.ResizeImagesWhenImporting && Storage.Instance.ImageImportConverting == ImageImportConverting.DontConvert)
-            {
-                File.Copy(filePath, $"Data/Resources/profile-{Id}.{Path.GetExtension(filePath)}", true);
-                return;
-            }
-
             Bitmap bitmap = Utils.GetBitmapFromFile(filePath);
 
-            if (Storage.Instance.ResizeImagesWhenImporting)
-            {
-                bitmap = Utils.ResizeBitmap(bitmap, new Size(ImageSize, ImageSize));
-            }
+            bitmap = Utils.ResizeBitmap(bitmap, new System.Drawing.Size(ImageSize, ImageSize));
 
             Image = bitmap.ToBitmapImage();
 
             string destPath = string.Empty;
 
-            switch (Storage.Instance.ImageImportConverting)
-            {
-                case ImageImportConverting.DontConvert:
-                    destPath = $"Data/Resources/profile-{Id}.{Path.GetExtension(filePath)}";
-                    if (File.Exists(destPath)) File.Delete(destPath);
-                    bitmap.Save(destPath);
-                    break;
-                case ImageImportConverting.ConvertToPng:
-                    destPath = $"Data/Resources/profile-{Id}.png";
-                    if (File.Exists(destPath)) File.Delete(destPath);
-                    bitmap.Save(destPath, ImageFormat.Png);
-                    break;
-                case ImageImportConverting.ConvertToJpg:
-                    destPath = $"Data/Resources/profile-{Id}.jpg";
-                    if (File.Exists(destPath)) File.Delete(destPath);
-                    bitmap.Save(destPath, ImageFormat.Jpeg);
-                    break;
-            }
+            destPath = $"Data/Resources/profile-{Id}.png";
+            if (File.Exists(destPath)) File.Delete(destPath);
+            bitmap.Save(destPath, ImageFormat.Png);
 
-           
+            RefreshImage();
         }
 
-        public void Dispose()
+        internal void DeleteImage()
         {
-            Dispose(true);
-            GC.SuppressFinalize(this);
+            if (ImagePath != null) File.Delete(ImagePath);
+            RefreshImage();
         }
-
-
-        private bool _disposed = false;
 
 
         [JsonConstructor]
-        private Profile(string name, Color backgroundColor, Guid id, ObservableCollection<Bind> binds, ObservableCollection<Abbreviation> abbreviations)
+        private Profile(string name, SolidColorBrush backgroundBrush, Guid id, ObservableCollection<Bind> binds, ObservableCollection<Abbreviation> abbreviations, bool usingStorage = true) : base(id, usingStorage)
         {
             Name = name;
-            BackgroundColor = backgroundColor;
-            Id = id;
+            BackgroundBrush = backgroundBrush;
             Binds = binds;
             Abbreviations = abbreviations;
 
             Initialize();
             LoadImageFromFile();
-
-            
         }
 
-        protected virtual void Dispose(bool disposing)
+        protected override void Dispose(bool disposing)
         {
             if (!_disposed)
             {
@@ -162,6 +140,9 @@ namespace Binder.Classes.Data
                     Abbreviations.CollectionChanged -= Abbreviations_CollectionChanged;
                 }
                 // освобождаем неуправляемые объекты
+
+                base.Dispose(disposing);
+
                 _disposed = true;
             }
         }
@@ -181,13 +162,18 @@ namespace Binder.Classes.Data
         private void Binds_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
             OnPropertyChanged(nameof(Binds));
-            Storage.RaiseSave();
         }
 
         private void Abbreviations_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
         {
             OnPropertyChanged(nameof(Abbreviations));
-            Storage.RaiseSave();
+        }
+
+        private void RefreshImage()
+        {
+            OnPropertyChanged(nameof(ImageFileIsExist));
+            OnPropertyChanged(nameof(CustomImageVisibility));
+            OnPropertyChanged(nameof(DefaultImageVisibility));
         }
 
         ~Profile()
