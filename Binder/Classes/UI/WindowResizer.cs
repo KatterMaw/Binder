@@ -317,14 +317,17 @@ namespace Binder.Classes.UI
     [StructLayout(LayoutKind.Sequential)]
     public struct Rectangle
     {
-        public int Left, Top, Right, Bottom;
+        public readonly int Left;
+        public readonly int Top;
+        public readonly int Right;
+        public readonly int Bottom;
 
         public Rectangle(int left, int top, int right, int bottom)
         {
-            this.Left = left;
-            this.Top = top;
-            this.Right = right;
-            this.Bottom = bottom;
+            Left = left;
+            Top = top;
+            Right = right;
+            Bottom = bottom;
         }
     }
 
@@ -355,8 +358,8 @@ namespace Binder.Classes.UI
         /// </summary>
         public Point(int x, int y)
         {
-            this.X = x;
-            this.Y = y;
+            X = x;
+            Y = y;
         }
     }
 
