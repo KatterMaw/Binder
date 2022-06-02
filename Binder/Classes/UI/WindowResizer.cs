@@ -84,6 +84,7 @@ namespace Binder.Classes.UI
         /// <summary>
         /// Called when the window dock position changes
         /// </summary>
+        // ReSharper disable once EventNeverSubscribedTo.Global
         public event Action<WindowDockPosition> WindowDockChanged = (dock) => { };
 
         #endregion
