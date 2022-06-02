@@ -13,6 +13,7 @@ using System.Windows.Forms;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Effects;
 using System.Windows.Media.Imaging;
+using Binder.Classes.UI;
 
 namespace Binder.Windows
 {
@@ -282,7 +283,7 @@ namespace Binder.Windows
         #region Add/EditProfilePopup
 
         private string _addOrEditProfilePopup_Operation;
-        internal string AddOrEditProfilePopup_Operation
+        public string AddOrEditProfilePopup_Operation
         {
             get => _addOrEditProfilePopup_Operation;
             set
