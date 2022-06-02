@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
-namespace Binder
+namespace Binder.UI
 {
     public abstract class ViewModel : INotifyPropertyChanged
     {

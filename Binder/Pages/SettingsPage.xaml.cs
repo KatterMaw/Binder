@@ -13,14 +13,14 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Updater
+namespace Binder.Pages
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Логика взаимодействия для Settings.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class SettingsPage : UserControl
     {
-        public MainWindow()
+        public SettingsPage()
         {
             InitializeComponent();
         }

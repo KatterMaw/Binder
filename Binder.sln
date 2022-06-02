@@ -3,9 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31729.503
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Binder", "Binder\Binder.csproj", "{6A7A4759-2F19-485E-856A-A35364C2C30E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Binder", "Binder\Binder.csproj", "{6A7A4759-2F19-485E-856A-A35364C2C30E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Updater", "Updater\Updater.csproj", "{0E9D2CC4-7A2B-47CE-AC32-FDE64FC31C2C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Updater", "Updater\Updater.csproj", "{0E9D2CC4-7A2B-47CE-AC32-FDE64FC31C2C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

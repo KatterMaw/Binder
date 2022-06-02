@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Binder.Classes.Data;
+using Binder.Environment;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
@@ -13,5 +15,14 @@ namespace Binder
     /// </summary>
     public partial class App : Application
     {
+        protected override void OnStartup(StartupEventArgs e)
+        {
+            if (StorableObject.GetAllObjectsOfType<Profile>().Length == 0)
+            {
+                var needless = Profile.New;
+            }
+
+            base.OnStartup(e);
+        }
     }
 }
